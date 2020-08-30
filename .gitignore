@@ -1,0 +1,14 @@
+# PyCharm
+.idea
+
+# MacOS
+.DS_Store
+
+# Byte-compiled
+__pycache__/
+
+# SQLite
+*.sqlite3
+
+# logs
+/logs
