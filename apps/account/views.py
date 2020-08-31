@@ -13,15 +13,8 @@ def register(request):
     else:
         content = {}
 
-        # JSON 格式检验
-        try:
-            json_data = json.loads(request.body)
-        except json.JSONDecodeError:
-            json_data = {}
-        if not json_data:
-            content['code'] = '001'
-            content['msg'] = 'JSON 格式解析错误'
-            return process_response(content)
+        # 数据经过中间件处理存放在 request.json_data 中
+        json_data = request.json_data
 
         # 验证码 captcha 检验
         try:
@@ -85,5 +78,3 @@ def register(request):
         content['msg'] = '注册成功'
 
         return process_response(content)
-
-

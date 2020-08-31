@@ -51,6 +51,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # custom middleware
+    'apps.middleware.validate_json.ValidateJSONMiddleware'
 ]
 
 ROOT_URLCONF = 'web.urls'
