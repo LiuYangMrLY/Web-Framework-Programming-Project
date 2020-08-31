@@ -7,7 +7,7 @@ class User(models.Model):
 
     class Meta:
         verbose_name = '用户'
-        verbose_name_plural = '用户'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.username
@@ -65,7 +65,7 @@ class Link(models.Model):
 
     class Meta:
         verbose_name = '外链'
-        verbose_name_plural = '外链'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.user.info.name
