@@ -13,3 +13,6 @@ __pycache__/
 # logs
 /logs
 *.log
+
+# Django
+migrations
