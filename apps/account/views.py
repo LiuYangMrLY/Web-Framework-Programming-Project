@@ -32,7 +32,7 @@ def register(request):
             content['code'] = '003'
             content['msg'] = '缺少验证码'
             return process_response(content)
-        if request.session.get('captcha', '') != captcha.lower():
+        if request.session.get('captcha', '').lower() != captcha.lower():
             content['code'] = '004'
             content['msg'] = '验证码错误'
             return process_response(content)
