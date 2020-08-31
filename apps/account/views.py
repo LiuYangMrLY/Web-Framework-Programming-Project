@@ -22,7 +22,7 @@ def register(request):
             content['code'] = '001'
             content['msg'] = 'JSON 格式解析错误'
             return process_response(content)
-        
+
         # 验证码 captcha 检验
         try:
             captcha = json_data['captcha']
@@ -32,7 +32,7 @@ def register(request):
             content['code'] = '003'
             content['msg'] = '缺少验证码'
             return process_response(content)
-        if request.session.get('captcha', '') != captcha:
+        if request.session.get('captcha', '') != captcha.lower():
             content['code'] = '004'
             content['msg'] = '验证码错误'
             return process_response(content)
