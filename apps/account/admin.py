@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+
+# register models
+admin.site.register([models.User, models.UserInfo, models.Link])
+
