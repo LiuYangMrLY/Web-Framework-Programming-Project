@@ -53,7 +53,7 @@ class Link(models.Model):
     Link_Type = (
         ('A', 'Apple'),
         ('G', 'GitHub'),
-        ('Y', 'YouTube  '),
+        ('Y', 'YouTube'),
         ('T', 'Twitter'),
     )
 
