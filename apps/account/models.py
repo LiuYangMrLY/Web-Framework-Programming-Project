@@ -42,12 +42,9 @@ class UserInfo(models.Model):
 
     @property
     def links(self):
-        result = []
+        result = {}
         for one in self.user.links.all():
-            result.append({
-                'type': one.type,
-                'content': one.content
-            })
+            result.update({one.type: one.content})
 
         return result
 
