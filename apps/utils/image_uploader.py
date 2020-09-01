@@ -42,4 +42,4 @@ def upload(request):
         if not re.search(settings.ALLOWED_IMAGE_EXTENSION[extension], magic.from_file(path)):
             return process_response({'code': '006', 'msg': '图片文件仅支持 jpg, png 格式'})
 
-        return process_response({'code': '000', 'msg': '上传成功'})
+        return process_response({'path': path, 'code': '000', 'msg': '上传成功'})
