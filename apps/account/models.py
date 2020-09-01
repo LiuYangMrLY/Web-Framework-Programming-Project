@@ -27,7 +27,7 @@ class UserInfo(models.Model):
     user = models.ForeignKey('User', on_delete=models.PROTECT, verbose_name='用户')
     name = models.CharField(max_length=50, verbose_name='姓名', null=False, blank=True, default='')
     sex = models.CharField(max_length=1, verbose_name='性别', choices=Gender, null=False, blank=False, default='S')
-    avatar = models.ImageField(upload_to='img', verbose_name='头像', default='default.jpg')
+    avatar = models.ImageField(upload_to='img', verbose_name='头像', default='img/default.jpg')
     email = models.EmailField(verbose_name='邮箱', null=False, blank=True, default='')
     quote = models.CharField(max_length=200, verbose_name='自我名言', null=False, blank=True, default='')
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
