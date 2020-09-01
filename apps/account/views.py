@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth.hashers import make_password, check_password
 
 from apps.account import models as account_models
@@ -24,13 +22,13 @@ def register(request):
         username = json_data['username']
         result = validate_username(username)
         if result:
-            return process_response({'code': result[0], 'msg': result[1]})
+            return process_response(result)
 
         # 密码 password 格式验证
         password = json_data['password']
         result = validate_password(password)
         if result:
-            return process_response({'code': result[0], 'msg': result[1]})
+            return process_response(result)
 
         # 用户名 username 存在性验证
         if account_models.User.objects.filter(username=username):

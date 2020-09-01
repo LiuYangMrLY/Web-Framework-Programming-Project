@@ -1,7 +1,7 @@
 import re
 
 
-def validate_username(username: str) -> list:
+def validate_username(username: str) -> dict:
     """
     1. 长度大于等于 4
     2. 长度小于等于 20
@@ -11,16 +11,16 @@ def validate_username(username: str) -> list:
     :return: 返回状态码
     """
     if len(username) < 4:
-        return ['102', '用户名应不少于 4 位']
+        return {'code': '102', 'msg': '用户名应不少于 4 位'}
     if len(username) > 20:
-        return ['102', '用户名应不多于 20 位']
+        return {'code': '103', 'msg': '用户名应不多于 20 位'}
     if re.search(r'[^A-Za-z0-9_]', username):
-        return ['102', '用户名仅能含有字母、数字和下划线']
+        return {'code': '104', 'msg': '用户名仅能含有字母、数字和下划线'}
 
-    return []
+    return {}
 
 
-def validate_password(password: str) -> list:
+def validate_password(password: str) -> dict:
     """
         1. 长度大于等于 6
         2. 长度小于等于 20
@@ -32,14 +32,14 @@ def validate_password(password: str) -> list:
         :return: 返回状态码
         """
     if len(password) < 6:
-        return ['112', '密码应不少于 6 位']
+        return {'code': '112', 'msg': '密码应不少于 6 位'}
     if len(password) > 20:
-        return ['112', '密码应不多于 20 位']
+        return {'code': '113', 'msg': '密码应不多于 20 位'}
     if not all(32 < ord(c) < 128 for c in password):
-        return ['112', '密码应仅包含合法字符']
+        return {'code': '114', 'msg': '密码应仅包含合法字符'}
     if not re.search(r'[0-9]', password):
-        return ['112', '密码必须包含数字']
+        return {'code': '115', 'msg': '密码必须包含数字'}
     if not re.search(r'[A-Za-z]', password):
-        return ['112', '密码必须包含字母']
+        return {'code': '116', 'msg': '密码必须包含字母'}
 
-    return []
+    return {}
