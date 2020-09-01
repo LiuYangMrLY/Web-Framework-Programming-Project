@@ -87,7 +87,7 @@ def logout(request):
 def status(request):
     if 'username' in request.session:
         user = account_models.User.objects.filter(username=request.session['username']).first()
-        return process_response({'username': user.username, 'avatar': user.info.avatar.path,
+        return process_response({'username': user.username, 'avatar': user.info.avatar.url,
                                  'status': True, 'code': '000', 'msg': '成功'})
     else:
         return process_response({'status': False, 'code': '000', 'msg': '成功'})
