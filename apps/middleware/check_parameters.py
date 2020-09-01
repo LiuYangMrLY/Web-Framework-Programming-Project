@@ -15,6 +15,14 @@ class CheckParametersMiddleware(MiddlewareMixin):
             'captcha': {'code': '003', 'msg': '缺少验证码'},
             'username': {'code': '101', 'msg': '缺少用户名'},
             'password': {'code': '111', 'msg': '缺少密码'}
+        },
+
+        '/api/account/user_info': {
+            'name': {'code': '121', 'msg': '缺少姓名'},
+            'sex': {'code': '122', 'msg': '缺少性别'},
+            'email': {'code': '123', 'msg': '缺少邮箱'},
+            'avatar': {'code': '124', 'msg': '缺少头像'},
+            'quote': {'code': '125', 'msg': '缺少座右铭'},
         }
 
     }

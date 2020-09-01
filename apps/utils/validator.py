@@ -43,3 +43,16 @@ def validate_password(password: str) -> dict:
         return {'code': '116', 'msg': '密码必须包含字母'}
 
     return {}
+
+
+def validate_email(email: str) -> dict:
+    """
+    1. 邮箱格式错误
+
+    :param email: 邮箱
+    :return: 返回状态码
+    """
+    if not re.search(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}$', email):
+        return {'code': '211', 'msg': '邮箱格式错误'}
+
+    return {}

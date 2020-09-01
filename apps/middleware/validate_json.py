@@ -8,7 +8,8 @@ from apps.utils.response_processor import process_response
 class ValidateJSONMiddleware(MiddlewareMixin):
     JSON_USED_URL = [
         '/api/account/register',
-        '/api/account/login'
+        '/api/account/login',
+        '/api/account/user_info'
     ]
 
     def process_request(self, request):
@@ -20,4 +21,4 @@ class ValidateJSONMiddleware(MiddlewareMixin):
             except json.JSONDecodeError:
                 json_data = {}
             if not json_data:
-                return process_response({'code': '0001', 'msg': 'JSON 格式解析错误'})
+                return process_response({'code': '001', 'msg': 'JSON 格式解析错误'})

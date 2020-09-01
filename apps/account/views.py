@@ -1,8 +1,11 @@
+import os
+
 from django.contrib.auth.hashers import make_password, check_password
 
+from web import settings
 from apps.account import models as account_models
 from apps.utils.response_processor import process_response
-from apps.utils.validator import validate_username, validate_password
+from apps.utils.validator import validate_username, validate_password, validate_email
 
 
 def register(request):
@@ -100,7 +103,7 @@ def user_information(request):
     elif request.method == 'GET':
         return get_user_info(request)
     else:
-        pass
+        return edit_user_info(request)
 
 
 def get_user_info(request):
@@ -119,3 +122,61 @@ def get_user_info(request):
 
     content.update({'code': '000', 'msg': '成功'})
     return process_response(content)
+
+
+def edit_user_info(request):
+    if 'username' not in request.session or request.session['username'] != 'Leo':
+        return process_response({'code': '006', 'msg': '无权限'})
+
+    user = account_models.User.objects.filter(username=request.session['username']).first()
+    info = user.info
+
+    json_data = request.json_data
+
+    # 姓名 name 验证
+    name = json_data['name']
+    if len(name) > 20:
+        return process_response({'code': '201', 'msg': '姓名过长'})
+
+    # 性别 sex 认证
+    sex = json_data['sex']
+    if sex not in ['M', 'F']:
+        return process_response({'code': '202', 'msg': '性别错误'})
+
+    # 邮箱 email 验证
+    email = json_data['email']
+    result = validate_email(email)
+    if result:
+        return process_response(result)
+
+    # 头像 avatar 验证
+    avatar = json_data['avatar']
+    if not os.path.exists(settings.BASE_DIR + '/' + avatar):
+        return process_response({'code': '203', 'msg': '图片不存在'})
+
+    # 座右铭 quote
+    quote = json_data['quote']
+    if len(quote) > 100:
+        return process_response({'code': '204', 'msg': '座右铭过长'})
+
+    # 外链 links 验证
+    if 'links' not in json_data:
+        links = {}
+    else:
+        links = json_data['links']
+    for one in links:
+        if one in info.links:
+            link = account_models.Link.objects.filter(type=one).first()
+            link.content = links[one]
+            link.save()
+        else:
+            account_models.Link(user=user, type=one, content=links[one]).save()
+
+    info.name = name
+    info.sex = sex
+    info.avatar = avatar
+    info.email = email
+    info.quote = quote
+    info.save()
+
+    return process_response({'code': '000', 'msg': '修改成功'})

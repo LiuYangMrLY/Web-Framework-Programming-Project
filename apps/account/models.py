@@ -51,8 +51,9 @@ class UserInfo(models.Model):
 
 class Link(models.Model):
     Link_Type = (
+        ('A', 'Apple'),
         ('G', 'GitHub'),
-        ('C', 'CSDN'),
+        ('Y', 'YouTube  '),
         ('T', 'Twitter'),
     )
 
