@@ -9,7 +9,8 @@ class ValidateJSONMiddleware(MiddlewareMixin):
     JSON_USED_URL = [
         '/api/account/register',
         '/api/account/login',
-        '/api/account/user_info'
+        '/api/account/user_info',
+        '/api/comment/comment'
     ]
 
     def process_request(self, request):

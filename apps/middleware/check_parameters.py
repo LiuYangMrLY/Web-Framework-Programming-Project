@@ -23,6 +23,10 @@ class CheckParametersMiddleware(MiddlewareMixin):
             'email': {'code': '123', 'msg': '缺少邮箱'},
             'avatar': {'code': '124', 'msg': '缺少头像'},
             'quote': {'code': '125', 'msg': '缺少座右铭'},
+        },
+
+        '/api/comment/comment': {
+            'content': {'code': '141', 'msg': '缺少评论'}
         }
 
     }

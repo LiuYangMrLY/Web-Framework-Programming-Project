@@ -13,18 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
-from apps.utils.captcha_generator import get_captcha_img
-from apps.utils.image_uploader import upload
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    path('api/captcha', get_captcha_img),
-    path('api/image', upload),
-
-    path('api/account/', include(('apps.account.urls', 'apps.account'), namespace='account')),
-    path('api/comment/', include(('apps.comment.urls', 'apps.comment'), namespace='comment'))
+    path('comment', views.comment)
 ]
