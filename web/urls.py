@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 from apps.utils.captcha_generator import get_captcha_img
+from apps.utils.image_uploader import upload
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/captcha', get_captcha_img),
+    path('api/image', upload),
 
     path('api/account/', include(('apps.account.urls', 'apps.account'), namespace='account'))
 ]

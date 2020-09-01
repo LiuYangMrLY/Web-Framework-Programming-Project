@@ -147,3 +147,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 图片上传文件路径
+IMAGE_PATH = 'img/'
+
+# 图片文件 image 允许的拓展名
+ALLOWED_IMAGE_EXTENSION = {
+    'jpg': "JPEG",
+    'jpeg': "JPEG",
+    'png': 'PNG'
+}
+
+# 图片文件 image 的最大大小 2 MB == 2 * 1024 * 1024 B
+IMAGE_MAX_SIZE = 2 * 1024 * 1024
+
