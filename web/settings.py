@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # custom apps
     'apps.account',
+    'apps.comment'
 ]
 
 MIDDLEWARE = [
