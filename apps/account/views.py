@@ -92,3 +92,30 @@ def status(request):
                                  'status': True, 'code': '000', 'msg': '成功'})
     else:
         return process_response({'status': False, 'code': '000', 'msg': '成功'})
+
+
+def user_information(request):
+    if not request.method == "GET" and not request.method == "POST":
+        return process_response({'code': '002', 'msg': '请求方法错误'})
+    elif request.method == 'GET':
+        return get_user_info(request)
+    else:
+        pass
+
+
+def get_user_info(request):
+    content = {}
+
+    user = account_models.User.objects.filter(username='Leo').first()
+    if user:
+        content.update({
+            'name': user.info.name,
+            'sex': user.info.sex,
+            'email': user.info.email,
+            'avatar': user.info.avatar.name,
+            'quote': user.info.quote,
+            'links': user.info.links
+        })
+
+    content.update({'code': '000', 'msg': '成功'})
+    return process_response(content)
