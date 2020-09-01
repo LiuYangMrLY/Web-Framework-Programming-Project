@@ -7,7 +7,8 @@ from apps.utils.response_processor import process_response
 
 class ValidateJSONMiddleware(MiddlewareMixin):
     JSON_USED_URL = [
-        '/api/account/register'
+        '/api/account/register',
+        '/api/account/login'
     ]
 
     def process_request(self, request):
