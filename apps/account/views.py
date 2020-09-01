@@ -18,6 +18,7 @@ def register(request):
         captcha = json_data['captcha']
         if request.session.get('captcha', '').lower() != captcha.lower():
             return process_response({'code': '004', 'msg': '验证码错误'})
+        del request.session['captcha']
 
         # 用户名 username 格式检验
         username = json_data['username']
@@ -60,6 +61,7 @@ def login(request):
         # 验证码 captcha 检验
         if request.session.get('captcha', '').lower() != captcha.lower():
             return process_response({'code': '004', 'msg': '验证码错误'})
+        del request.session['captcha']
 
         # 用户 user 存在性验证
         user = account_models.User.objects.filter(username=username).first()
