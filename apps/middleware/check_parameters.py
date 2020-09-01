@@ -11,6 +11,12 @@ class CheckParametersMiddleware(MiddlewareMixin):
             'password': {'code': '111', 'msg': '缺少密码'}
         },
 
+        '/api/account/login': {
+            'captcha': {'code': '003', 'msg': '缺少验证码'},
+            'username': {'code': '101', 'msg': '缺少用户名'},
+            'password': {'code': '111', 'msg': '缺少密码'}
+        }
+
     }
 
     def process_request(self, request):

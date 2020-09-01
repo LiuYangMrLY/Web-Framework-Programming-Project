@@ -44,3 +44,33 @@ def register(request):
         user_info.save()
 
         return process_response({'code': '000', 'msg': '注册成功'})
+
+
+def login(request):
+    if not request.method == 'POST':
+        return process_response({'code': '002', 'msg': '请求方法错误'})
+    else:
+        # 数据经过中间件处理存放在 request.json_data 中
+        json_data = request.json_data
+
+        username = json_data['username']
+        password = json_data['password']
+        captcha = json_data['captcha']
+
+        # 验证码 captcha 检验
+        if request.session.get('captcha', '').lower() != captcha.lower():
+            return process_response({'code': '004', 'msg': '验证码错误'})
+
+        # 用户 user 存在性验证
+        user = account_models.User.objects.filter(username=username).first()
+        if not user:
+            return process_response({'code': '131', 'msg': '用户名错误'})
+
+        # 密码 password 验证
+        if check_password(password, user.password) is False:
+            return process_response({'code': '132', 'msg': '密码错误'})
+
+        # 设置登陆状态
+        request.session['username'] = username
+
+        return process_response({'code': '000', 'msg': '登陆成功'})
