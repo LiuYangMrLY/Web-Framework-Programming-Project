@@ -78,5 +78,13 @@ def login(request):
         return process_response({'code': '000', 'msg': '登陆成功'})
 
 
+def logout(request):
+    if 'username' in request.session:
+        del request.session['username']
+        return process_response({'code': '000', 'msg': '成功'})
+    else:
+        return process_response({'code': '000', 'msg': '未登陆'})
+
+
 def status(request):
     return process_response({'status': 'username' in request.session, 'code': '000', 'msg': '成功'})
