@@ -53,7 +53,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # custom middleware
-    'apps.middleware.validate_json.ValidateJSONMiddleware'
+    'apps.middleware.validate_json.ValidateJSONMiddleware',
+    'apps.middleware.check_parameters.CheckParametersMiddleware'
 ]
 
 ROOT_URLCONF = 'web.urls'

@@ -17,28 +17,14 @@ def register(request):
         json_data = request.json_data
 
         # 验证码 captcha 检验
-        try:
-            captcha = json_data['captcha']
-        except KeyError:
-            captcha = ''
-        if not captcha:
-            content['code'] = '003'
-            content['msg'] = '缺少验证码'
-            return process_response(content)
+        captcha = json_data['captcha']
         if request.session.get('captcha', '').lower() != captcha.lower():
             content['code'] = '004'
             content['msg'] = '验证码错误'
             return process_response(content)
 
         # 用户名 username 检验
-        try:
-            username = json_data['username']
-        except KeyError:
-            username = ''
-        if not username:
-            content['code'] = '101'
-            content['msg'] = '缺少用户名'
-            return process_response(content)
+        username = json_data['username']
         result = validate_username(username)
         if result:
             content['code'] = result[0]
@@ -46,14 +32,7 @@ def register(request):
             return process_response(content)
 
         # 密码 password 验证
-        try:
-            password = json_data['password']
-        except KeyError:
-            password = ''
-        if not password:
-            content['code'] = '111'
-            content['msg'] = '缺少密码'
-            return process_response(content)
+        password = json_data['password']
         result = validate_password(password)
         if result:
             content['code'] = result[0]
