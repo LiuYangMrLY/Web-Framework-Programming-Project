@@ -76,3 +76,7 @@ def login(request):
         request.session['username'] = username
 
         return process_response({'code': '000', 'msg': '登陆成功'})
+
+
+def status(request):
+    return process_response({'status': 'username' in request.session, 'code': '000', 'msg': '成功'})
