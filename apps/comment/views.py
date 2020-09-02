@@ -19,6 +19,7 @@ def get_comments(request):
     for one in comments:
         content['comments'].append({
             'username': one.user.username,
+            'avatar': one.user.info.avatar.name,
             'content': one.content,
             'time': one.create_time.strftime('%Y-%m-%d %H:%M:%S')
         })
