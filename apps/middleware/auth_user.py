@@ -5,9 +5,10 @@ from apps.utils.response_processor import process_response
 
 class AuthUserMiddleware(MiddlewareMixin):
     LOGIN_REQUIRED_URL = {
-        '/api/account/user_info': ['POST'],
-
-        '/api/comment/comment': ['POST']
+        # TODO 临时不判断
+        # '/api/account/user_info': ['POST'],
+        #
+        # '/api/comment/comment': ['POST']
     }
 
     def process_request(self, request):

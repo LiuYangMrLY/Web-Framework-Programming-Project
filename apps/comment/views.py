@@ -35,7 +35,9 @@ def add_comment(request):
     if len(content) > 150:
         return process_response({'code': '142', 'msg': '评论过长'})
 
-    user = account_models.User.objects.filter(username=request.session['username']).first()
+    # TODO 临时修改
+    # user = account_models.User.objects.filter(username=request.session['username']).first()
+    user = account_models.User.objects.filter(username='Leo').first()
 
     comm = comment_models.Comment(user=user, content=content)
     comm.save()
