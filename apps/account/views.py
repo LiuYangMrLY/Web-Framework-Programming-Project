@@ -79,6 +79,7 @@ def login(request):
         request.session['username'] = username
 
         return process_response({'username': user.username, 'avatar': user.info.avatar.url,
+                                 'is_super': user.username == 'Leo',
                                  'code': '000', 'msg': '登陆成功'})
 
 
