@@ -120,7 +120,8 @@ CACHES = {
             "CONNECTION_POOL_KWARGS": {
                 "max_connections": 100,
                 'decode_responses': True
-            }
+            },
+            "PASSWORD": "123"
         }
     }
 }
@@ -148,9 +149,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -176,4 +177,3 @@ ALLOWED_IMAGE_EXTENSION = {
 
 # 图片文件 image 的最大大小 2 MB == 2 * 1024 * 1024 B
 IMAGE_MAX_SIZE = 2 * 1024 * 1024
-
