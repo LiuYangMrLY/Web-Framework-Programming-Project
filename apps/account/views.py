@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth.hashers import make_password, check_password
+from django_redis import get_redis_connection
 
 from web import settings
 from apps.account import models as account_models
@@ -118,16 +119,39 @@ def user_information(request):
 def get_user_info(request):
     content = {}
 
-    user = account_models.User.objects.filter(username='Leo').first()
-    if user:
+    conn = get_redis_connection('default')
+    if conn.get('save'):
         content.update({
-            'name': user.info.name,
-            'sex': user.info.sex,
-            'email': user.info.email,
-            'avatar': user.info.avatar.name,
-            'quote': user.info.quote,
-            'links': user.info.links
-        })
+                'name': conn.get('name'),
+                'sex': conn.get('sex'),
+                'email': conn.get('email'),
+                'avatar': conn.get('avatar'),
+                'quote': conn.get('quote'),
+                'links': {}
+            })
+
+        for one in ['A', 'G', 'Y', 'T']:
+            value = conn.get(one)
+            if value:
+                content['links'].update({one: value})
+    else:
+        user = account_models.User.objects.filter(username='Leo').first()
+        if user:
+            content.update({
+                'name': user.info.name,
+                'sex': user.info.sex,
+                'email': user.info.email,
+                'avatar': user.info.avatar.name,
+                'quote': user.info.quote,
+            })
+            conn.mset(content)
+
+            links = user.info.links
+            for one in links:
+                conn.mset({one: links[one]})
+            content.update({'links': links})
+
+            conn.set('save', '1')
 
     content.update({'code': '000', 'msg': '成功'})
     return process_response(content)
@@ -188,5 +212,8 @@ def edit_user_info(request):
     info.email = email
     info.quote = quote
     info.save()
+
+    conn = get_redis_connection('default')
+    conn.set('save', '')
 
     return process_response({'code': '000', 'msg': '修改成功'})
