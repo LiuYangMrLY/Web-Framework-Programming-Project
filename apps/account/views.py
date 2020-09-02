@@ -78,7 +78,8 @@ def login(request):
         # 设置登陆状态
         request.session['username'] = username
 
-        return process_response({'code': '000', 'msg': '登陆成功'})
+        return process_response({'username': user.name, 'avatar': user.info.avatar.url,
+                                 'code': '000', 'msg': '登陆成功'})
 
 
 def logout(request):
