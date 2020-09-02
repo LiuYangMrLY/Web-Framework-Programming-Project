@@ -1,9 +1,6 @@
-import os
-
 from django.contrib.auth.hashers import make_password, check_password
 from django_redis import get_redis_connection
 
-from web import settings
 from apps.account import models as account_models
 from apps.utils.response_processor import process_response
 from apps.utils.validator import validate_username, validate_password, validate_email
@@ -93,18 +90,13 @@ def logout(request):
 
 
 def status(request):
-    # TODO 临时修改
-    user = account_models.User.objects.filter(username='Leo').first()
-    return process_response({'username': user.username, 'avatar': user.info.avatar.url,
-                             'is_super': user.username == 'Leo',
-                             'status': True, 'code': '000', 'msg': '成功'})
-    # if 'username' in request.session:
-    #     user = account_models.User.objects.filter(username=request.session['username']).first()
-    #     return process_response({'username': user.username, 'avatar': user.info.avatar.url,
-    #                              'is_super': user.username == 'Leo',
-    #                              'status': True, 'code': '000', 'msg': '成功'})
-    # else:
-    #     return process_response({'status': False, 'code': '000', 'msg': '成功'})
+    if 'username' in request.session:
+        user = account_models.User.objects.filter(username=request.session['username']).first()
+        return process_response({'username': user.username, 'avatar': user.info.avatar.url,
+                                 'is_super': user.username == 'Leo',
+                                 'status': True, 'code': '000', 'msg': '成功'})
+    else:
+        return process_response({'status': False, 'code': '000', 'msg': '成功'})
 
 
 def user_information(request):
@@ -158,9 +150,8 @@ def get_user_info(request):
 
 
 def edit_user_info(request):
-    # TODO 临时修改
-    # if request.session['username'] != 'Leo':
-    #     return process_response({'code': '007', 'msg': '无权限'})
+    if request.session['username'] != 'Leo':
+        return process_response({'code': '007', 'msg': '无权限'})
 
     user = account_models.User.objects.filter(username='Leo').first()
     info = user.info
@@ -208,7 +199,6 @@ def edit_user_info(request):
 
     info.name = name
     info.sex = sex
-    # info.avatar = avatar
     info.email = email
     info.quote = quote
     info.save()
