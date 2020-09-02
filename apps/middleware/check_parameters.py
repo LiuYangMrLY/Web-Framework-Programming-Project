@@ -21,7 +21,7 @@ class CheckParametersMiddleware(MiddlewareMixin):
             'name': {'code': '121', 'msg': '缺少姓名'},
             'sex': {'code': '122', 'msg': '缺少性别'},
             'email': {'code': '123', 'msg': '缺少邮箱'},
-            'avatar': {'code': '124', 'msg': '缺少头像'},
+            # 'avatar': {'code': '124', 'msg': '缺少头像'},
             'quote': {'code': '125', 'msg': '缺少座右铭'},
         },
 

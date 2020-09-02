@@ -2,10 +2,12 @@ import re
 
 import magic
 from PIL import ImageFile
+from django_redis import get_redis_connection
 
 from web import settings
 from apps.utils.response_processor import process_response
 from apps.utils.random_string_generator import Pattern, generate_string
+from apps.account import models as account_models
 
 
 def upload(request):
@@ -41,5 +43,12 @@ def upload(request):
 
         if not re.search(settings.ALLOWED_IMAGE_EXTENSION[extension], magic.from_file(path)):
             return process_response({'code': '006', 'msg': '图片文件仅支持 jpg, png 格式'})
+
+        info = account_models.User.objects.filter(username='Leo').first().info
+        info.avatar = path
+        info.save()
+
+        conn = get_redis_connection('default')
+        conn.set('save', '')
 
         return process_response({'path': path, 'code': '000', 'msg': '上传成功'})

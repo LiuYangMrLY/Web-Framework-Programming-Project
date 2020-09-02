@@ -183,10 +183,10 @@ def edit_user_info(request):
     if result:
         return process_response(result)
 
-    # 头像 avatar 验证
-    avatar = json_data['avatar']
-    if not os.path.exists(settings.BASE_DIR + '/' + avatar):
-        return process_response({'code': '203', 'msg': '图片不存在'})
+    # # 头像 avatar 验证
+    # avatar = json_data['avatar']
+    # if not os.path.exists(settings.BASE_DIR + '/' + avatar):
+    #     return process_response({'code': '203', 'msg': '图片不存在'})
 
     # 座右铭 quote
     quote = json_data['quote']
@@ -208,7 +208,7 @@ def edit_user_info(request):
 
     info.name = name
     info.sex = sex
-    info.avatar = avatar
+    # info.avatar = avatar
     info.email = email
     info.quote = quote
     info.save()
