@@ -125,8 +125,8 @@ def get_user_info(request):
 
 
 def edit_user_info(request):
-    if 'username' not in request.session or request.session['username'] != 'Leo':
-        return process_response({'code': '006', 'msg': '无权限'})
+    if request.session['username'] != 'Leo':
+        return process_response({'code': '007', 'msg': '无权限'})
 
     user = account_models.User.objects.filter(username=request.session['username']).first()
     info = user.info

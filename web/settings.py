@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # custom middleware
+    'apps.middleware.auth_user.AuthUserMiddleware',
     'apps.middleware.validate_json.ValidateJSONMiddleware',
     'apps.middleware.check_parameters.CheckParametersMiddleware'
 ]

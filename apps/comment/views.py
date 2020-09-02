@@ -29,9 +29,6 @@ def get_comments(request):
 
 
 def add_comment(request):
-    if 'username' not in request.session:
-        return process_response({'code': '006', 'msg': '无权限'})
-
     json_data = request.json_data
 
     content = json_data['content']
