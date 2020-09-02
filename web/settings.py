@@ -178,3 +178,6 @@ ALLOWED_IMAGE_EXTENSION = {
 
 # 图片文件 image 的最大大小 2 MB == 2 * 1024 * 1024 B
 IMAGE_MAX_SIZE = 2 * 1024 * 1024
+
+# 外链对应全称
+LINKS_MAP = {'A': 'apple', 'G': 'github', 'Y': 'youtube', 'T': 'twitter'}

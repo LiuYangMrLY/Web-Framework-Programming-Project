@@ -1,6 +1,7 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django_redis import get_redis_connection
 
+from web import settings
 from apps.account import models as account_models
 from apps.utils.response_processor import process_response
 from apps.utils.validator import validate_username, validate_password, validate_email
@@ -119,13 +120,11 @@ def get_user_info(request):
                 'email': conn.get('email'),
                 'avatar': conn.get('avatar'),
                 'quote': conn.get('quote'),
-                'links': {}
             })
-
-        for one in ['A', 'G', 'Y', 'T']:
+        for one in settings.LINKS_MAP:
             value = conn.get(one)
             if value:
-                content['links'].update({one: value})
+                content[settings.LINKS_MAP[one]] = value
     else:
         user = account_models.User.objects.filter(username='Leo').first()
         if user:
@@ -141,7 +140,7 @@ def get_user_info(request):
             links = user.info.links
             for one in links:
                 conn.mset({one: links[one]})
-            content.update({'links': links})
+                content[settings.LINKS_MAP[one]] = links[one]
 
             conn.set('save', '1')
 
@@ -184,18 +183,18 @@ def edit_user_info(request):
     if len(quote) > 100:
         return process_response({'code': '204', 'msg': '座右铭过长'})
 
-    # 外链 links 验证
-    if 'links' not in json_data:
-        links = {}
-    else:
-        links = json_data['links']
-    for one in links:
-        if one in info.links:
-            link = account_models.Link.objects.filter(type=one).first()
-            link.content = links[one]
-            link.save()
-        else:
-            account_models.Link(user=user, type=one, content=links[one]).save()
+    # # 外链 links 验证
+    # if 'links' not in json_data:
+    #     links = {}
+    # else:
+    #     links = json_data['links']
+    # for one in links:
+    #     if one in info.links:
+    #         link = account_models.Link.objects.filter(type=one).first()
+    #         link.content = links[one]
+    #         link.save()
+    #     else:
+    #         account_models.Link(user=user, type=one, content=links[one]).save()
 
     info.name = name
     info.sex = sex
