@@ -111,6 +111,7 @@ DATABASES = {
 # MySQL DB config ends
 
 # Redis config starts
+REDIS_PASSWORD = os.getenv('web_project_redis_password', '')
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -121,7 +122,7 @@ CACHES = {
                 "max_connections": 100,
                 'decode_responses': True
             },
-            "PASSWORD": "123"
+            "PASSWORD": REDIS_PASSWORD
         }
     }
 }
