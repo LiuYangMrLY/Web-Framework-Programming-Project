@@ -108,10 +108,12 @@ class Captcha:
 
 
 def get_captcha_img(request):
-    img = Captcha()
+    if request.method == "GET":
+        img = Captcha()
 
-    return HttpResponse(img.saveInMemory(request),
-                        content_type='image/png',
-                        status='200',
-                        reason='ok',
-                        charset='utf-8')
+        return HttpResponse(img.saveInMemory(request),
+                            content_type='image/png',
+                            status='200',
+                            reason='ok',
+                            charset='utf-8'
+                            )
