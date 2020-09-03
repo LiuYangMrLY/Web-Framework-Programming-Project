@@ -164,7 +164,7 @@ def edit_user_info(request):
 
     # 性别 sex 认证
     sex = json_data['sex']
-    if sex not in {'男': 'M', '女': 'F'}:
+    if sex not in ['M', 'F']:
         return process_response({'code': '202', 'msg': '性别错误'})
 
     # 邮箱 email 验证
@@ -197,7 +197,7 @@ def edit_user_info(request):
     #         account_models.Link(user=user, type=one, content=links[one]).save()
 
     info.name = name
-    info.sex = {'男': 'M', '女': 'F'}[sex],
+    info.sex = sex
     info.email = email
     info.quote = quote
     info.save()
